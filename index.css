@@ -1,0 +1,67 @@
+.start-button {
+  position: absolute;
+  top: 45%;
+  left: 40%;
+  font-size: 60px;
+  border-radius: 10px;
+}
+.end-game {
+  position: absolute;
+  top: 45%;
+  left: 40%;
+  font-size: 60px;
+  border-radius: 10px;
+}
+body {
+  margin: 0px;
+  background-color: rgb(87, 119, 119);
+}
+h2 {
+  float: right;
+  border: 5px solid #000;
+  border-top: none;
+  border-right: none;
+  margin: 0px;
+  padding: 20px;
+  width: 100px;
+}
+h3 {
+  float: right;
+  border: 5px solid #000;
+  border-top: none;
+  border-right: none;
+  font-size: 23px;
+  margin: 0px;
+  padding: 20px;
+  width: 100px;
+}
+.game-div {
+  display: flex;
+  flex-direction: row;
+  height: 89vh;
+  width: 100vw;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+.fruit-image {
+  width: 105px;
+  height: 97px;
+  border-radius: 30px;
+}
+
+@keyframes moveVertical {
+  0% {
+    bottom: 0px;
+  }
+  50% {
+    bottom: 560px;
+  }
+  100% {
+    bottom: 0px;
+  }
+}
+
+.move-vertical {
+  animation: moveVertical 6s;
+}
