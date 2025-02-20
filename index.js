@@ -28,34 +28,23 @@ startBtn.addEventListener("click", () => {
   startBtn.style.display = "none";
   document.getElementById("gameDiv").style.display = "inline-flex";
   document.querySelector("h2").style.display = "block";
-
-  const startLoad = setInterval(() => {
-    startGame();
-  }, 4500);
-
-  setTimeout(stopGame, 22000);
-  function stopGame() {
-    clearInterval(startLoad);
-    gameDiv.innerHTML = "";
-    const endGame = document.getElementById("endGame");
-    endGame.style.display = "block";
-    let remaining = 2 * (scoreCount - totalFruits);
-    let result = scoreCount - remaining;
-    if (result > 0) {
-      endGame.children[0].textContent = "You Won";
-      endGame.children[1].textContent = `Missed: ${scoreCount - totalFruits}`;
-      endGame.children[2].textContent = `Caught: ${scoreCount}`;
-    } else {
-      endGame.children[0].textContent = "You Lose";
-      endGame.children[1].textContent = `Missed: ${scoreCount - totalFruits}`;
-      endGame.children[2].textContent = `Caught: ${scoreCount}`;
-    }
-  }
+  setTimeout(stopGame, 36000);
 });
+
+let count = 0;
+const startLoad = setInterval(() => {
+  if (count < 3) {
+    startGame();
+    count++;
+  } else {
+    clearInterval(startLoad);
+  }
+}, 10000);
 
 function startGame() {
   const gameDiv = document.getElementById("gameDiv");
   gameDiv.innerHTML = "";
+
   for (let i = 0; i < fruitsArr.length; i++) {
     let fruitDiv = document.createElement("div");
     fruitDiv.setAttribute("alt", "fruitImage");
@@ -72,5 +61,25 @@ function startGame() {
       scoreEl.textContent = `Score: ${scoreCount}`;
     });
     gameDiv.appendChild(fruitDiv);
+  }
+}
+
+function stopGame() {
+  clearInterval(startLoad);
+  gameDiv.innerHTML = "";
+  const endGame = document.getElementById("endGame");
+  endGame.style.display = "block";
+  let remaining = 2 * (scoreCount - totalFruits);
+  let result = scoreCount - remaining;
+  if (result > 0) {
+    endGame.children[0].textContent = "You Won";
+    endGame.children[1].textContent = `Missed: ${Math.abs(
+      scoreCount - totalFruits
+    )}`;
+    endGame.children[2].textContent = `Caught: ${scoreCount}`;
+  } else {
+    endGame.children[0].textContent = "You Lose";
+    endGame.children[1].textContent = `Missed: ${scoreCount - totalFruits}`;
+    endGame.children[2].textContent = `Caught: ${scoreCount}`;
   }
 }
