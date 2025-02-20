@@ -1,12 +1,9 @@
 const startBtn = document.getElementById("startBtn");
-let arr;
 let scoreCount = 0;
 let totalFruits = 24;
 
 let scoreEl = document.getElementById("scoreEl");
 let missedCountEl = document.getElementById("missedCountEl");
-const startBtnX = startBtn.getBoundingClientRect().x;
-const startBtnY = startBtn.getBoundingClientRect().y;
 let fruitsArr = [
   "./assets/strawberryImage1.jfif",
   "./assets/appleImage2.jfif",
@@ -16,30 +13,25 @@ let fruitsArr = [
   "./assets/watermelonImage6.jfif",
 ];
 
-window.onload = function () {
-  console.log(startBtnX, startBtnY);
-};
-
-document.addEventListener("mousedown", (event) => {
-  console.log(event.target);
-});
-
 startBtn.addEventListener("click", () => {
   startBtn.style.display = "none";
   document.getElementById("gameDiv").style.display = "inline-flex";
   document.querySelector("h2").style.display = "block";
-  setTimeout(stopGame, 36000);
-});
 
-let count = 0;
-const startLoad = setInterval(() => {
-  if (count < 3) {
-    startGame();
-    count++;
-  } else {
-    clearInterval(startLoad);
-  }
-}, 10000);
+  let count = 0;
+
+  startGame();
+
+  const gameInterval = setInterval(() => {
+    if (count < 2) {
+      startGame();
+      count++;
+    } else {
+      clearInterval(gameInterval);
+      stopGame();
+    }
+  }, 10000);
+});
 
 function startGame() {
   const gameDiv = document.getElementById("gameDiv");
@@ -50,27 +42,36 @@ function startGame() {
     fruitDiv.setAttribute("alt", "fruitImage");
     fruitDiv.classList.add("move-vertical");
     fruitDiv.style.position = "relative";
+
     let imageElement = document.createElement("img");
     imageElement.setAttribute("src", fruitsArr[i]);
     imageElement.classList.add("fruit-image");
     fruitDiv.appendChild(imageElement);
     fruitDiv.setAttribute("id", `${i}`);
+
     fruitDiv.addEventListener("click", function () {
-      fruitDiv.remove();
+      fruitDiv.remove(); // Remove fruit when clicked
       ++scoreCount;
       scoreEl.textContent = `Score: ${scoreCount}`;
     });
+
     gameDiv.appendChild(fruitDiv);
+
+    setTimeout(() => {
+      fruitDiv.remove();
+    }, 6000);
   }
 }
 
 function stopGame() {
-  clearInterval(startLoad);
+  const gameDiv = document.getElementById("gameDiv");
   gameDiv.innerHTML = "";
   const endGame = document.getElementById("endGame");
   endGame.style.display = "block";
+
   let remaining = 2 * (scoreCount - totalFruits);
   let result = scoreCount - remaining;
+
   if (result > 0) {
     endGame.children[0].textContent = "You Won";
     endGame.children[1].textContent = `Missed: ${Math.abs(
